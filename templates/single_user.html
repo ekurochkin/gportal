@@ -1,0 +1,66 @@
+{%- extends 'index.html' -%}
+{%- block header -%}{%- include 'head.html' -%}{%- endblock -%}
+{%- block body -%}
+	{%- if user -%}
+		<div class="row">
+			<div class="col-lg-6">
+				<h1>{{ user['appointment'] | safe }}</h1>
+				<h2>{{ user['l_name'] | safe }} {{ user['name'] }} {{ user['m_name'] }}</h2>
+				<hr>
+				<div class="col-sm-4">
+					<img alt="140x140" class="img-rounded" data-src="holder.js/140x140" style="width: 140px; height: 140px;" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgdmlld0JveD0iMCAwIDE0MCAxNDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjQ1LjUiIHk9IjcwIiBzdHlsZT0iZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQ7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+MTQweDE0MDwvdGV4dD48L2c+PC9zdmc+" data-holder-rendered="true">
+
+				</div>
+				<div class="col-sm-6">
+					<table style="padding: 5px; width: 100%">
+					    <tbody>
+					        <tr>
+					        	<td><code>duration</code></td>
+					        	<td>{{ user['duration'] }}</td>
+					        </tr>
+					        <tr>
+					        	<td><code>location</code></td>
+					        	<td>{{ user['location'] }}</td>
+					        </tr>
+					        <tr>
+					        	<td><code>views</code></td>
+					        	<td>{{ user['views'] }}</td>
+					        </tr>
+					    </tbody>
+					</table>
+				</div>
+			</div>
+			<div class="col-sm-6"></div>
+
+			<div class="col-sm-12" style="margin-top: 20px;">
+				<div data-example-id="togglable-tabs" role="tabpanel" class="bs-example bs-example-tabs">
+				    <ul role="tablist" class="nav nav-tabs" id="myTab">
+				      <li class="active" role="presentation"><a aria-expanded="true" aria-controls="home" data-toggle="tab" role="tab" id="home-tab" href="#home">Home</a></li>
+				      <li role="presentation"><a aria-controls="profile" data-toggle="tab" id="profile-tab" role="tab" href="#profile">Profile</a></li>
+				      <li class="dropdown" role="presentation">
+				        <a aria-controls="myTabDrop1-contents" data-toggle="dropdown" class="dropdown-toggle" id="myTabDrop1" href="#">Dropdown <span class="caret"></span></a>
+				        <ul id="myTabDrop1-contents" aria-labelledby="myTabDrop1" role="menu" class="dropdown-menu">
+				          <li><a aria-controls="dropdown1" data-toggle="tab" id="dropdown1-tab" role="tab" tabindex="-1" href="#dropdown1">@fat</a></li>
+				          <li><a aria-controls="dropdown2" data-toggle="tab" id="dropdown2-tab" role="tab" tabindex="-1" href="#dropdown2">@mdo</a></li>
+				        </ul>
+				      </li>
+				    </ul>
+				    <div class="tab-content" id="myTabContent">
+				      <div aria-labelledby="home-tab" id="home" class="tab-pane fade in active" role="tabpanel">
+				        <p></p>
+				      </div>
+				      <div aria-labelledby="profile-tab" id="profile" class="tab-pane fade" role="tabpanel">
+				        <p></p>
+				      </div>
+				      <div aria-labelledby="dropdown1-tab" id="dropdown1" class="tab-pane fade" role="tabpanel">
+				        <p></p>
+				      </div>
+				      <div aria-labelledby="dropdown2-tab" id="dropdown2" class="tab-pane fade" role="tabpanel">
+				        <p></p>
+				      </div>
+				    </div>
+				  </div>
+				  </div>
+			</div>
+	{%- endif -%}
+{%- endblock -%}

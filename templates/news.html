@@ -1,0 +1,17 @@
+{%- extends 'index.html' -%}
+{%- block header -%}{%- include 'head.html' -%}{%- endblock -%}
+{%- block body -%}
+	{%- if news -%}
+		<div class="row">
+			{%- for item in news -%}
+			<div class="thumbnail">
+				<h2 id="thumbnail-label"><a class="anchorjs-link" href="{{ url_for('single_news', permalink=item['permalink']) }}" data-target="_blank">{{ item['title'] | safe }}<span class="anchorjs-icon"></span></a></h2>
+				<hr/>
+				<p> {{ item['body'] }}</p>
+				<hr/>
+				<p> {{ item['time'] }} </p>
+			</div>
+		    {%- endfor -%}
+		</div>
+	{%- endif -%}
+{%- endblock -%}

@@ -1,0 +1,33 @@
+GLOBAL
+
+- users list
+- integration with other product (Jira, TestRail, TFS)
+
+
+USER
+
+- view personal info
+	1. global
+	- foto
+	- appointment
+	- name, l_name
+	- duration
+	- location
+	- views
+	2. tabs
+	- summary
+	- skils
+	- ptojects
+
+
+- edit personal info
+- blog
+	* new post
+	* edit post
+	* comments
+
+
+Admin
+
+- edit users info
+
