@@ -1,0 +1,18 @@
+{%- extends 'index.html' -%}
+{%- block header -%}{%- include 'head.html' -%}{%- endblock -%}
+{%- block body -%}
+	{%- if news -%}
+		<div class="row">
+			<div class="col-md-9">
+		    	<div class="page-header">
+					<h1>{{news['title']}}</h1>
+				</div>
+				</hr>
+				<div class="content">
+					<p>{{news['body']}}</p>
+					<i>{{news['time']}}</i>
+				</div>
+		</div>
+		</div>
+	{%- endif -%}
+{%- endblock -%}
