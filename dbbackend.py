@@ -2,77 +2,102 @@
 import os
 import sys
 import pymongo
+import config
 
-DEBUG = True
+DEBUG = config.DEBUG
 
-class BaseManager:
+
+class BaseManager(object):
 
     def __init__(self, collect):
         self.collect = collect
 
-    def _responce(self, data=None, error=None):
+    def _response(self, data=None, error=None):
         return {"data": data, "error": error}
 
     def find(self, query=None):
         try:
-            if not query:
-                query = {}
+            query = query or {}
 
             data = [d for d in self.collect.find(query)]
-            responce = self._responce(data)
+            response = self._response(data)
         except Exception, e:
-            responce = self._responce(error=e)
-        return responce
+            response = self._response(error=e)
+        return response
 
     def count(self, query=None):
+        query = query or {}
         try:
-            responce = self._responce(self.collect.find(query).count())
+            response = self._response(self.collect.find(query).count())
         except Exception:
-            responce = self._responce(error="Operatiion error...")
-        return responce
+            response = self._response(error="Operatiion error...")
+        return response
 
     def find_ext(self, limit, skip):
         try:
             cur = self.collect.find().sort("_id", direction=-1).skip(skip).\
                 limit(limit)
-            responce = self._responce([d for d in cur])
+            response = self._response([d for d in cur])
         except Exception, e:
             self.print_debug_info(str(e))
-            responce = self._responce(error="Find error...")
-        return responce
+            response = self._response(error="Find error...")
+        return response
 
     def update(self, id, set):
+        response = self._response()
         try:
             self.collect.update({"_id": ObjectId(id), "$set": set},
                                 upsert=False)
-            self.responce["data"] = True
+            response["data"] = True
         except Exception:
-            self.responce["error"] = "Update {} error...".format(self.collect)
+            response["error"] = "Update {} error...".format(self.collect)
 
-        return self.responce
+        return response
 
     def insert(self, set):
+        response = self._response()
         try:
-            self.responce["data"] = self.collect.insert(set)
+            response["data"] = self.collect.insert(set)
         except Exception, e:
             self.print_debug_info(str(e))
-            self.responce["error"] = "Update {} error...".format(self.collect)
-        return self.responce
+            response["error"] = "Update {} error...".format(self.collect)
+        return response
 
     def find_by_permalink(self, permalink):
+        response = self._response()
         try:
             cur = self.collect.find_one({'permalink': permalink})
-            return cur
+            response["data"] = cur
         except Exception:
-            return "Error find one..."
+            response["error"] = "Error find one..."
+        return response
 
     def find_by_id(self, id):
         try:
             cur = self.collect.find_one({'_id': ObjectId(id)})
-            responce = self._responce(cur)
+            response = self._response(cur)
         except Exception:
-            responce = self._response(error='Post not found..')
-        return responce
+            response = self._response(error='Post not found..')
+        return response
+
+    def get_paginator(self, limit, skip, tag=None, search=None,
+                       search_fields=None):
+        response = self._response()
+        cond = {}
+        if tag is not None:
+            cond = {'tags': tag}
+        elif search and search_fields:
+            cond = {'$or': []}
+            add = {'$regex': search, '$options': 'i'}
+            for sf in search_fields:
+                cond["$or"].append({sf:add})
+        try:
+            cur = self.collect.find(cond).skip(skip).limit(limit)
+            response['data'] = [r for r in cur]
+        except Exception, e:
+            self.print_debug_info(e, DEBUG)
+            response['error'] = 'Data not found...'
+        return response
 
     @staticmethod
     def print_debug_info(msg, show=DEBUG):
@@ -93,7 +118,21 @@ class BaseManager:
             print error_end
 
 
-class User(object):
+class User(BaseManager):
+
     def __init__(self, collect):
-        super(User, self).__init__(collect)        
-		       
+        super(User, self).__init__(collect)
+
+    def get_users(self, limit, skip, tag=None, search=None, search_fields=None):
+        search_fields = search_fields or ["name", "l_name"]
+        return self.get_paginator(limit, skip, tag, search, search_fields)
+
+
+class News(BaseManager):
+
+    def __init__(self, collect):
+        super(News, self).__init__(collect)
+
+    def get_news(self, limit, skip, tag=None, search=None, search_fields=None):
+        search_fields = search_fields or ["title", "body", "time"]
+        return self.get_paginator(limit, skip, tag, search, search_fields)

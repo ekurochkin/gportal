@@ -3,15 +3,18 @@
 {%- block body -%}
 	{%- if news -%}
 		<div class="row">
-			{%- for item in news -%}
-			<div class="thumbnail">
-				<h2 id="thumbnail-label"><a class="anchorjs-link" href="{{ url_for('single_news', permalink=item['permalink']) }}" data-target="_blank">{{ item['title'] | safe }}<span class="anchorjs-icon"></span></a></h2>
-				<hr/>
-				<p> {{ item['body'] }}</p>
-				<hr/>
-				<p> {{ item['time'] }} </p>
-			</div>
-		    {%- endfor -%}
+			<div class="col-md-9">
+			{%- for post in news -%}
+		    	<div class="page-header">
+					<h1><a href="{{ url_for('single_news', permalink=post['permalink']) }}">{{post['title']}}</a></h1>
+				</div>
+				</hr>
+				<div class="content">
+					<p>{{post['body']}}</p>
+					<i>{{post['time']}}</i>
+				</div>
+			{%- endfor -%}
+		</div>
 		</div>
 	{%- endif -%}
 {%- endblock -%}
