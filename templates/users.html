@@ -3,28 +3,35 @@
 {%- block body -%}
 	{%- if users -%}
 		<div class="row">
+			<div class="input-group">
+				<input type="text" placeholder="Search for..." class="form-control">
+				<span class="input-group-btn">
+					<button type="button" class="btn btn-default">Search!</button>
+				</span>
+			</div>
+			<br>
 			{%- for user in users -%}
 			<div class="col-sm-6 col-md-2">
-		        <div class="thumbnail">
-		        	<img alt="140x140" data-src="holder.js/140x140" style="width: 140px; height: 140px;" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgdmlld0JveD0iMCAwIDE0MCAxNDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjQ1LjUiIHk9IjcwIiBzdHlsZT0iZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQ7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+MTQweDE0MDwvdGV4dD48L2c+PC9zdmc+" data-holder-rendered="true">
-			        <div class="caption">
-			            <h3 id="thumbnail-label"><a class="anchorjs-link" href="{{ url_for('user', permalink=user['permalink']) }}" data-target="_blank">{{ user['nickname'] | safe }}<span class="anchorjs-icon"></span></a></h3>
+				<div class="thumbnail">
+					<img alt="140x140" data-src="holder.js/140x140" style="width: 140px; height: 140px;" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgdmlld0JveD0iMCAwIDE0MCAxNDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iMTQwIiBoZWlnaHQ9IjE0MCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjQ1LjUiIHk9IjcwIiBzdHlsZT0iZmlsbDojQUFBQUFBO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1mYW1pbHk6QXJpYWwsIEhlbHZldGljYSwgT3BlbiBTYW5zLCBzYW5zLXNlcmlmLCBtb25vc3BhY2U7Zm9udC1zaXplOjEwcHQ7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+MTQweDE0MDwvdGV4dD48L2c+PC9zdmc+" data-holder-rendered="true">
+					<div class="caption">
+						<h3 id="thumbnail-label"><a class="anchorjs-link" href="{{ url_for('user', permalink=user['permalink']) }}" data-target="_blank">{{ user['nickname'] | safe }}<span class="anchorjs-icon"></span></a></h3>
 
-			            <p>{{ user['name'] }} {{ user['l_name'] }}</p>
-			            <hr/>
-			            <span class="glyphicon glyphicon-tags" aria-hidden="true">
-			            	{%- for tag in user['tags'] -%}
-			            		{{ " " + tag }}
-			            	{%- endfor -%}
-			            </span>
+						<p>{{ user['name'] }} {{ user['l_name'] }}</p>
+						<hr/>
+						<span class="glyphicon glyphicon-tags" aria-hidden="true">
+							{%- for tag in user['tags'] -%}
+								{{ " " + tag }}
+							{%- endfor -%}
+						</span>
 
-			            <p>
-			            	<a role="button" class="btn btn-primary" href="{{ url_for('user', permalink=user['permalink']) }}">More</a>
-			            </p>
-			         </div>
-		        </div>
-		    </div>
-		    {%- endfor -%}
+						<p>
+							<a role="button" class="btn btn-primary" href="{{ url_for('user', permalink=user['permalink']) }}">More</a>
+						</p>
+					 </div>
+				</div>
+			</div>
+			{%- endfor -%}
 		</div>
 	{%- endif -%}
 {%- endblock -%}

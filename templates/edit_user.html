@@ -1,0 +1,54 @@
+{%- extends 'index.html' -%}
+{%- block body -%}
+	<div class="post clearfix">
+		<div class="row">
+			<div class="col-lg-8">
+				<div class="page-header">
+					<h1>Edit user</h1>
+				</div>
+				<div class="content">
+					{%- if user -%}
+						<form class="form-user" role="form" method="post" action="{{ url_for('save_user') }}">
+							<div class="photo-user">
+								<img src="{{ user['avatar'] }}" class="img-rounded" style="width: 140px; height: 140px;">
+							</div>
+							<div>
+								<fieldset>
+									<div class="input-group {% if error and error_type == 'validate' %}has-error{% endif %}">
+										{%- if error and error_type == 'validate' -%}
+											<label class="control-label" for="user-name">Required field</label>
+										{%- endif -%}
+										<span id="basic-addon1" class="input-group-addon">Name</span>
+									    <input type="text" class="form-control" name="user-name" id="user-name" placeholder="Name" value="{{ user['name'] }}" required autocomplete="off">
+									</div>
+									<br>
+									<div class="input-group {% if error and error_type == 'validate' %}has-error{% endif %}">
+										{%- if error and error_type == 'validate' -%}
+											<label class="control-label" for="user-lname">Required field</label>
+										{%- endif -%}
+										<span id="basic-addon1" class="input-group-addon">LastName</span>
+									    <input type="text" class="form-control" name="user-lname" id="user-lname" placeholder="Last name" value="{{ user['l_name'] }}" required autocomplete="off">
+									</div>
+									<br>
+									<div class="input-group {% if error and error_type == 'validate' %}has-error{% endif %}">
+										{%- if error and error_type == 'validate' -%}
+											<label class="control-label" for="user-nickname">Required field</label>
+										{%- endif -%}
+										<span id="basic-addon1" class="input-group-addon">Nickname</span>
+									    <input type="text" class="form-control" name="user-nickname" id="user-nickname" placeholder="Nickname" value="{{ user['nickname'] }}" required autocomplete="off">
+									</div>
+									<br>
+								</fieldset>
+								<div class="form-group">
+									<input name="user-permalink" type="hidden" value="{{ user['permalink'] }}">
+									<input name="_csrf_token" type="hidden" value="{{ csrf_token() }}">
+								    <input id="post-submit" type="submit" class="btn btn-primary" value="Submit">
+							    </div>
+							</div>
+						</form>
+					{%- endif -%}
+				</div>
+			</div>
+		</div>
+	</div>
+{%- endblock -%}
