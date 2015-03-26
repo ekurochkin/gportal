@@ -54,6 +54,17 @@ class BaseManager(object):
 
         return response
 
+    def update_by_permalink(self, permalink, set):
+        response = self._response()
+        try:
+            self.collect.update({"permalink": permalink}, {"$set": set},
+                                upsert=False)
+            response["data"] = True
+        except Exception:
+            response["error"] = "Update {} error...".format(self.collect)
+
+        return response
+
     def insert(self, set):
         response = self._response()
         try:
